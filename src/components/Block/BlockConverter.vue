@@ -4,7 +4,25 @@
     id="converter"
   >
     <BaseInner class="converter__inner inner">
-      <div class="converter__container">
+      <div
+        class="converter__container"
+        v-if="loading"
+      >
+        <p class="converter__message">Загрузка...</p>
+      </div>
+      <div
+        class="converter__container"
+        v-else-if="error"
+      >
+        <p class="converter__message converter__message--error">
+          {{ error }}
+        </p>
+      </div>
+
+      <div
+        class="converter__container"
+        v-else
+      >
         <h2 class="converter__title">Конвертер валют</h2>
 
         <div class="converter__row">
@@ -45,13 +63,7 @@
           </select>
         </div>
 
-        <p v-if="loading">Загрузка...</p>
-        <p v-else-if="error">{{ error }}</p>
-
-        <div
-          class="converter__row"
-          v-else
-        >
+        <div class="converter__row">
           <label
             class="converter__label"
             for="convertedAmount"
@@ -101,6 +113,7 @@ onMounted(async () => {
     loading.value = false
   } catch (err) {
     loading.value = false
+    error.value = "Ошибка загрузки"
   }
 })
 
@@ -165,6 +178,19 @@ watch(selectedCurrency, (newValue) => {
     &:focus {
       outline: none;
       border-color: var(--color-accent);
+    }
+  }
+
+  &__message {
+    text-align: center;
+    font: 600 2.6rem var(--main-font);
+
+    &:not(&--error) {
+      color: var(--color-black);
+    }
+
+    &--error {
+      color: tomato;
     }
   }
 

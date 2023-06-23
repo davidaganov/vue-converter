@@ -1,0 +1,16 @@
+//---- Base
+@import "./_reset", "./__variables";
+
+html,
+body {
+  height: 100%;
+  font-family: var(--main-font);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: var(--color-gray-600);
+}
